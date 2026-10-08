@@ -1,0 +1,1028 @@
+{
+  "info": {
+    "name": "Tienda de Maquillaje (Glow Studio) - Todos los endpoints",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Carpeta 1: API RESTful v1 de la actividad (sin login). Carpetas 2-4: rutas de la app web; las que dicen (admin) o (clienta) requieren ejecutar antes el login correspondiente (carpeta 2). "
+  },
+  "item": [
+    {
+      "name": "1. API RESTful v1 - Productos (actividad U1 EP2, sin login)",
+      "item": [
+        {
+          "name": "POST - Crear producto",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/v1/productos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos"
+              ],
+              "protocol": "http"
+            },
+            "description": "201 Created. Guarda el id en 15.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"LAB-100\",\n  \"nombre\": \"Labial Mate Rojo Pasión\",\n  \"tono\": \"Rojo\",\n  \"precio\": 149.5,\n  \"stock\": 30,\n  \"id_marca\": 3,\n  \"id_categoria\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });",
+                  "const j = pm.response.json(); if (j.id) { pm.collectionVariables.set('id_creado', j.id); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Listar todos los productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/v1/productos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos"
+              ],
+              "protocol": "http"
+            },
+            "description": "200 OK"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Obtener producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/v1/productos/15",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos",
+                "15"
+              ],
+              "protocol": "http"
+            },
+            "description": "200 OK (404 si no existe)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT - Actualizar producto",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/v1/productos/15",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos",
+                "15"
+              ],
+              "protocol": "http"
+            },
+            "description": "200 OK (400 datos inválidos / 404 no existe)",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"LAB-100\",\n  \"nombre\": \"Labial Mate Rojo Pasión Pro\",\n  \"tono\": \"Rojo\",\n  \"precio\": 159.0,\n  \"stock\": 25,\n  \"id_marca\": 3,\n  \"id_categoria\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE - Eliminar producto",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/v1/productos/15",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "productos",
+                "15"
+              ],
+              "protocol": "http"
+            },
+            "description": "200 OK (404 no existe; 400 si tiene pedidos)"
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "Casos de error",
+          "item": [
+            {
+              "name": "GET - ID inexistente (404)",
+              "request": {
+                "method": "GET",
+                "header": [],
+                "url": {
+                  "raw": "http://40.233.25.127/api/v1/productos/999",
+                  "host": [
+                    "40",
+                    "233",
+                    "25",
+                    "127"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "999"
+                  ],
+                  "protocol": "http"
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Código HTTP 404', function () { pm.response.to.have.status(404); });",
+                      "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "POST - Datos inválidos (400)",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "http://40.233.25.127/api/v1/productos",
+                  "host": [
+                    "40",
+                    "233",
+                    "25",
+                    "127"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos"
+                  ],
+                  "protocol": "http"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"nombre\": \"\",\n  \"precio\": -5\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Código HTTP 400', function () { pm.response.to.have.status(400); });",
+                      "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "PUT - ID inexistente (404)",
+              "request": {
+                "method": "PUT",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  }
+                ],
+                "url": {
+                  "raw": "http://40.233.25.127/api/v1/productos/999",
+                  "host": [
+                    "40",
+                    "233",
+                    "25",
+                    "127"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "999"
+                  ],
+                  "protocol": "http"
+                },
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"sku\": \"LAB-100\",\n  \"nombre\": \"Labial Mate Rojo Pasión Pro\",\n  \"tono\": \"Rojo\",\n  \"precio\": 159.0,\n  \"stock\": 25,\n  \"id_marca\": 3,\n  \"id_categoria\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Código HTTP 404', function () { pm.response.to.have.status(404); });",
+                      "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE - ID inexistente (404)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://40.233.25.127/api/v1/productos/999",
+                  "host": [
+                    "40",
+                    "233",
+                    "25",
+                    "127"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "999"
+                  ],
+                  "protocol": "http"
+                }
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Código HTTP 404', function () { pm.response.to.have.status(404); });",
+                      "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "name": "DELETE - Producto con pedidos (400)",
+              "request": {
+                "method": "DELETE",
+                "header": [],
+                "url": {
+                  "raw": "http://40.233.25.127/api/v1/productos/1",
+                  "host": [
+                    "40",
+                    "233",
+                    "25",
+                    "127"
+                  ],
+                  "path": [
+                    "api",
+                    "v1",
+                    "productos",
+                    "1"
+                  ],
+                  "protocol": "http"
+                },
+                "description": "El producto 1 tiene pedidos."
+              },
+              "response": [],
+              "event": [
+                {
+                  "listen": "test",
+                  "script": {
+                    "type": "text/javascript",
+                    "exec": [
+                      "pm.test('Código HTTP 400', function () { pm.response.to.have.status(400); });",
+                      "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                    ]
+                  }
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. Sesión (app web)",
+      "item": [
+        {
+          "name": "GET - Índice de la API",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api"
+              ],
+              "protocol": "http"
+            },
+            "description": "Lista las rutas disponibles de la app web."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST - Login administradora",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/login",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "protocol": "http"
+            },
+            "description": "Inicia sesión como admin. La cookie de sesión se guarda sola en Postman.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"admin123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST - Login clienta",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/login",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "login"
+              ],
+              "protocol": "http"
+            },
+            "description": "Inicia sesión como clienta (rol cliente).",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"daniela.herrera\",\n  \"password\": \"cliente123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Sesión actual",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/session",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "session"
+              ],
+              "protocol": "http"
+            },
+            "description": "200 con la sesión activa; 401 si no hay."
+          },
+          "response": []
+        },
+        {
+          "name": "POST - Logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/logout",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "logout"
+              ],
+              "protocol": "http"
+            },
+            "description": "Cierra la sesión."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "3. Catálogos y productos (app web)",
+      "item": [
+        {
+          "name": "GET - Catálogos (marcas y categorías)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/catalogos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "catalogos"
+              ],
+              "protocol": "http"
+            },
+            "description": "Público."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Listar productos",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/productos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ],
+              "protocol": "http"
+            },
+            "description": "Público."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Producto por ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/productos/1",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "1"
+              ],
+              "protocol": "http"
+            },
+            "description": "Público. 404 si no existe."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "POST - Crear producto (admin)",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/productos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "productos"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin. 201 Created.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"LAB-100\",\n  \"nombre\": \"Labial Mate Rojo Pasión\",\n  \"tono\": \"Rojo\",\n  \"precio\": 149.5,\n  \"stock\": 30,\n  \"id_marca\": 3,\n  \"id_categoria\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 201', function () { pm.response.to.have.status(201); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });",
+                  "const j = pm.response.json(); if (j.id_producto) { pm.collectionVariables.set('id_creado_web', j.id_producto); }"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "PUT - Actualizar producto (admin)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "http://40.233.25.127/api/productos/15",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "15"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin.",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"sku\": \"LAB-100\",\n  \"nombre\": \"Labial Mate Rojo Pasión Pro\",\n  \"tono\": \"Rojo\",\n  \"precio\": 159.0,\n  \"stock\": 25,\n  \"id_marca\": 3,\n  \"id_categoria\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "DELETE - Eliminar producto (admin)",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/productos/15",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "productos",
+                "15"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "4. Clientes y pedidos",
+      "item": [
+        {
+          "name": "GET - Listar clientes (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/clientes",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "clientes"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Mi perfil (clienta)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/clientes/me",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "clientes",
+                "me"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como clienta."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Listar pedidos (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/pedidos",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "pedidos"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "GET - Pedido por ID (admin)",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://40.233.25.127/api/pedidos/1",
+              "host": [
+                "40",
+                "233",
+                "25",
+                "127"
+              ],
+              "path": [
+                "api",
+                "pedidos",
+                "1"
+              ],
+              "protocol": "http"
+            },
+            "description": "Requiere login como admin. 404 si no existe."
+          },
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Código HTTP 200', function () { pm.response.to.have.status(200); });",
+                  "pm.test('Respuesta JSON', function () { pm.response.to.be.json; });"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "name": "tienda-maquillaje",
+  "version": "1.0.0",
+  "description": "Tienda de maquillaje: Node.js + Express + MySQL",
+  "main": "server.js",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=18" },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.1",
+    "mysql2": "^3.11.0"
+  }
+}
